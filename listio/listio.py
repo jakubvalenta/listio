@@ -22,7 +22,7 @@ def _read_csv(file_path):
 
 
 def _write_csv(file_path, data):
-    with open(file_path, 'a', newline='') as f:
+    with open(file_path, 'a') as f:
         writer = csv.writer(
             f,
             delimiter=CSV_DELIMITER,
@@ -32,7 +32,7 @@ def _write_csv(file_path, data):
 
 
 def read_lines(file_path):
-    with open(file_path, 'r', newline='') as f:
+    with open(file_path, 'r') as f:
         for line in strip_comments_and_empty_lines(f):
             yield line
 
