@@ -1,6 +1,4 @@
 import unicodecsv as csv
-import sys
-
 
 COMMENT_CHAR = '#'
 
