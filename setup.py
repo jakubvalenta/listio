@@ -12,10 +12,11 @@ setup(
 
     version='1.0.0',
 
-    description='Write lists to files and read them.',
+    description='Read/write lists and maps (two dimensional lists) from/to'
+    ' files.',
     long_description=long_description,
 
-    url='https://lab.saloun.cz/jakub/listio',
+    url='https://github.com/jakubvalenta/listio',
 
     author='Jakub Valenta',
     author_email='jakub@jakubvalenta.cz',
