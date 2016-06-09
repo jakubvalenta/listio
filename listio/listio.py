@@ -15,7 +15,8 @@ def strip_comments_and_empty_lines(lines):
 def _read_csv(file_path):
     return csv.reader(
         read_lines(file_path),
-        delimiter=CSV_DELIMITER
+        delimiter=CSV_DELIMITER,
+        encoding='utf-8'
     )
 
 
@@ -24,7 +25,8 @@ def _write_csv(file_path, data):
         writer = csv.writer(
             f,
             delimiter=CSV_DELIMITER,
-            lineterminator=CSV_LINETERMINATOR
+            lineterminator=CSV_LINETERMINATOR,
+            encoding='utf-8'
         )
         writer.writerows(data)
 
@@ -32,7 +34,7 @@ def _write_csv(file_path, data):
 def read_lines(file_path):
     with open(file_path, 'r') as f:
         for line in strip_comments_and_empty_lines(f):
-            yield line
+            yield line.encode('utf-8')
 
 
 def read_map(file_path):
