@@ -21,7 +21,7 @@ def _read_csv(file_path):
 
 
 def _write_csv(file_path, data):
-    with open(file_path, 'a') as f:
+    with open(file_path, 'ab') as f:
         writer = csv.writer(
             f,
             delimiter=CSV_DELIMITER,
