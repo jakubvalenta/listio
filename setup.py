@@ -38,6 +38,6 @@ setup(
     packages=find_packages(),
 
     install_requires=[
-        'unicodecsv',
+        'unicodecsv==0.14.1',
     ],
 )
