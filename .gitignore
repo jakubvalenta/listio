@@ -1,9 +1,11 @@
+*.DS_Store
+*.egg-info
 *.pyc
+.cache
+.pytest_cache
+.tox
 __pycache__
 build
 dist
-*.DS_Store
-*.egg-info
-.tox
-.cache
-reports/
+reports
+venv
