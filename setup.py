@@ -11,7 +11,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 setup(
     name='listio',
 
-    version='1.0.1',
+    version='1.1.0',
 
     description='Read/write lists and maps (two dimensional lists) from/to'
     ' files.',
