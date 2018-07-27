@@ -58,13 +58,28 @@ class Test(unittest.TestCase):
                 '# this is a comment\n'
                 '"next;item,";foo;bar\n'
             )
-        self.assertEqual(
-            list(listio.read_map(TMP_FILE_PATH)),
-            [
-                ['First column', 'second column', '3'],
-                ['next;item,', 'foo', 'bar'],
-            ]
-        )
+        result = list(listio.read_map(TMP_FILE_PATH))
+        expected = [
+            ['First column', 'second column', '3'],
+            ['next;item,', 'foo', 'bar'],
+        ]
+        self.assertEqual(result, expected)
+        os.remove(TMP_FILE_PATH)
+
+    def test_read_map_custom_format(self):
+        TMP_FILE_PATH = '_tmp_map.txt'
+        with open(TMP_FILE_PATH, 'w') as f:
+            f.write(
+                'First column,"second column",3\r\n'
+                '# this is a comment\r\n'
+                '"next;item,",foo,bar\r\n'
+            )
+        result = list(listio.read_map(TMP_FILE_PATH, delimiter=u','))
+        expected = [
+            ['First column', 'second column', '3'],
+            ['next;item,', 'foo', 'bar'],
+        ]
+        self.assertEqual(result, expected)
         os.remove(TMP_FILE_PATH)
 
     def test_write_map(self):
@@ -81,6 +96,25 @@ class Test(unittest.TestCase):
                 f.read(),
                 'First column;second column;3\n'
                 '"next;item,";foo;bar\n'
+            )
+        os.remove(TMP_FILE_PATH)
+
+    def test_write_map_custom_format(self):
+        TMP_FILE_PATH = '_tmp_map.txt'
+        listio.write_map(
+            TMP_FILE_PATH,
+            [
+                ['First column', 'second column', '3'],
+                ['next;item,', 'foo', 'bar'],
+            ],
+            delimiter=u',',
+            lineterminator=u'\r\n'
+        )
+        with open(TMP_FILE_PATH, 'rb') as f:
+            self.assertEqual(
+                f.read(),
+                b'First column,second column,3\r\n'
+                b'"next;item,",foo,bar\r\n'
             )
         os.remove(TMP_FILE_PATH)
 
