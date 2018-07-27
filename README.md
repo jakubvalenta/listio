@@ -2,23 +2,21 @@
 
 Read/write lists and maps (two dimensional lists) from/to files.
 
-Lists are stored as plain text -- one value per line.
+- Lists are stored as plain text files with one list item per line.
+- Maps (two dimensional lists) are stored as CSV.
 
-Maps (two dimensional lists) are stored as CSV.
-
-When reading a list or map from a file, lines starting with a hash sign (`#`) are considered to be comments and ignored.
+When reading a list or map, lines starting with a hash sign (`#`) are considered
+to be comments and therefore ignored.
 
 ## Installation
 
-Install using setuptools:
+Install ListIO using pip:
 
 ```
-python setup.py install
+pip install listio
 ```
 
 ## Usage
-
-See [tests/test_listio.py](tests/test_listio.py) for a working example.
 
 ### Lists
 
@@ -53,21 +51,12 @@ foo
 bar
 ```
 
-```python
-import listio
-
-mylist = listio.read_list('mylist.txt')
-```
-
-Variable `mylist` now contains an iterator. If we print it:
+Read `mylist.txt` as an iterator:
 
 ```python
-print(list(mylist))
-```
-
-the result is:
-
-```python
+>>> import listio
+>>> mylist = listio.read_list('mylist.txt')
+>>> list(mylist)
 ['First item', 'second item', 'foo', 'bar']
 ```
 
@@ -91,6 +80,17 @@ foo bar;baz;x
 1;2;3
 ```
 
+The default CSV delimiter is `;` and lineterminator `\n`. You can change this:
+
+``` python
+listio.write_map(
+    'mymap.csv,
+    [['foo bar', 'baz', 'x'], [1, 2, 3]],
+    delimiter=',',
+    lineterminator='\r\n'
+)
+```
+
 ### Reading
 
 mymap.csv:
@@ -101,23 +101,24 @@ First column;"second column";3
 "next;item,";foo;bar
 ```
 
-```python
-import listio
-
-mymap = listio.read_map('mymap.csv')
-```
-
-Variable `mymap` now contains an iterator. If we print it:
+Read `mymap.csv` as an iterator:
 
 ```python
-print(list(mymap))
-```
-
-the result is:
-
-```python
+>>> import listio
+>>> mymap = listio.read_map('mymap.csv')
+>>> list(mymap)
 [['First column', 'second column', '3'], ['next;item,', 'foo', 'bar']]
 ```
+
+The default CSV delimiter is `;` and lineterminator `\n`. You can change this:
+
+``` python
+>>> listio.read_map('mymap.csv', delimiter=',', lineterminator='\r\n')
+```
+
+## Examples
+
+See [tests/test_listio.py](tests/test_listio.py) for more usage examples.
 
 ## Contributing
 

@@ -2,8 +2,8 @@ import unicodecsv as csv
 
 COMMENT_CHAR = '#'
 
-CSV_DELIMITER = ';'
-CSV_LINETERMINATOR = '\n'
+DEFAULT_DELIMITER = ';'
+DEFAULT_LINETERMINATOR = '\n'
 
 
 def strip_comments_and_empty_lines(lines):
@@ -12,20 +12,24 @@ def strip_comments_and_empty_lines(lines):
             yield line.strip()
 
 
-def _read_csv(file_path):
+def _read_csv(file_path, delimiter=DEFAULT_DELIMITER):
     return csv.reader(
         read_lines(file_path),
-        delimiter=CSV_DELIMITER,
+        delimiter=delimiter,
         encoding='utf-8'
     )
 
 
-def _write_csv(file_path, data):
+def _write_csv(
+        file_path,
+        data,
+        delimiter=DEFAULT_DELIMITER,
+        lineterminator=DEFAULT_LINETERMINATOR):
     with open(file_path, 'ab') as f:
         writer = csv.writer(
             f,
-            delimiter=CSV_DELIMITER,
-            lineterminator=CSV_LINETERMINATOR,
+            delimiter=delimiter,
+            lineterminator=lineterminator,
             encoding='utf-8'
         )
         writer.writerows(data)
@@ -37,12 +41,9 @@ def read_lines(file_path):
             yield line.encode('utf-8')
 
 
-def read_map(file_path):
-    return _read_csv(file_path)
+read_map = _read_csv
 
-
-def write_map(file_path, data):
-    return _write_csv(file_path, data)
+write_map = _write_csv
 
 
 def read_list(file_path):
