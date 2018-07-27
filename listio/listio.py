@@ -1,9 +1,11 @@
-import unicodecsv as csv
+import io
 
-COMMENT_CHAR = '#'
+from backports import csv
 
-DEFAULT_DELIMITER = ';'
-DEFAULT_LINETERMINATOR = '\n'
+COMMENT_CHAR = u'#'
+
+DEFAULT_DELIMITER = u';'
+DEFAULT_LINETERMINATOR = u'\n'
 
 
 def strip_comments_and_empty_lines(lines):
@@ -15,8 +17,7 @@ def strip_comments_and_empty_lines(lines):
 def _read_csv(file_path, delimiter=DEFAULT_DELIMITER):
     return csv.reader(
         read_lines(file_path),
-        delimiter=delimiter,
-        encoding='utf-8'
+        delimiter=delimiter
     )
 
 
@@ -25,20 +26,19 @@ def _write_csv(
         data,
         delimiter=DEFAULT_DELIMITER,
         lineterminator=DEFAULT_LINETERMINATOR):
-    with open(file_path, 'ab') as f:
+    with io.open(file_path, 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(
             f,
             delimiter=delimiter,
-            lineterminator=lineterminator,
-            encoding='utf-8'
+            lineterminator=lineterminator
         )
         writer.writerows(data)
 
 
 def read_lines(file_path):
-    with open(file_path, 'r') as f:
+    with io.open(file_path, 'r', newline='', encoding='utf-8') as f:
         for line in strip_comments_and_empty_lines(f):
-            yield line.encode('utf-8')
+            yield line
 
 
 read_map = _read_csv
